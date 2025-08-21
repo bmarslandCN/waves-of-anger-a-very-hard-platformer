@@ -60,7 +60,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Checkpoint, function (sprite, ot
             value.setKind(SpriteKind.ClearedCheckpoint)
             animation.runImageAnimation(
             value,
-            assets.animation`FlagTransition`,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `],
             100,
             false
             )
@@ -71,32 +88,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Checkpoint, function (sprite, ot
             value.setImage(assets.image`CheckpointTile`)
         }
     }
-})
-scene.onOverlapTile(SpriteKind.Player, assets.tile`EndTip`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
-    for (let value of tiles.getTilesByType(assets.tile`EndMiddle`)) {
-        tiles.setTileAt(value, assets.tile`transparency16`)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`EndBase`)) {
-        tiles.setTileAt(value, assets.tile`transparency16`)
-    }
-    for (let value of sprites.allOfKind(SpriteKind.Goal)) {
-        animation.runImageAnimation(
-        value,
-        assets.animation`GateFlip`,
-        100,
-        false
-        )
-    }
-    timer.after(1500, function () {
-        DitherTransition()
-        timer.after(750, function () {
-            sprite.setPosition(0, 0)
-            sprites.destroy(sprite)
-            LoadTitleScreen()
-            LogPoints()
-        })
-    })
 })
 function TestLevel () {
     EditorLoaded = 2
@@ -179,7 +170,7 @@ function LoadTitleScreen () {
     sprites.setDataNumber(Camera, "BackgroundMovement", 0)
     Camera.setPosition(0, 0)
     scene.cameraFollowSprite(Camera)
-    tiles.setCurrentTilemap(tilemap`TitleScreen`)
+    tiles.setCurrentTilemap(tilemap`level1`)
     scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`Background`)
     Camera.setPosition(0, 0)
     Title = sprites.create(assets.image`Title`, SpriteKind.Misc)
@@ -198,49 +189,49 @@ function LoadLevel (_: number) {
     EditorLoaded = 0
     GameLoaded = 1
     if (_ == 1) {
-        tiles.setCurrentTilemap(tilemap`EasyDifficulty`)
+        tiles.setCurrentTilemap(tilemap`level2`)
     }
     if (_ == 2) {
-        tiles.setCurrentTilemap(tilemap`MediumDifficulty`)
+        tiles.setCurrentTilemap(tilemap`level3`)
     }
     if (_ == 3) {
-        tiles.setCurrentTilemap(tilemap`HardDifficulty`)
+        tiles.setCurrentTilemap(tilemap`level4`)
     }
     if (_ == 4) {
-        tiles.setCurrentTilemap(tilemap`InsaneDifficulty`)
+        tiles.setCurrentTilemap(tilemap`level5`)
     }
     IncrediblePolo = sprites.create(assets.image`IncrediblePoloRight`, SpriteKind.Player)
     SpawnLocation = tiles.getTileLocation(1, 13)
     scene.cameraFollowSprite(IncrediblePolo)
     sprites.setDataNumber(Mouse, "LevelDifficulty", _)
-    for (let value of tiles.getTilesByType(assets.tile`SandFloor`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         tiles.setWallAt(value, true)
     }
-    for (let value of tiles.getTilesByType(assets.tile`SandFiller`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         tiles.setWallAt(value, true)
     }
-    for (let value of tiles.getTilesByType(assets.tile`SpikeFloor`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         SpikeTile = sprites.create(assets.image`FloorSpikeIcon`, SpriteKind.Spike)
         tiles.placeOnTile(SpikeTile, value)
     }
-    for (let value of tiles.getTilesByType(assets.tile`SpikeCieling`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         SpikeTile = sprites.create(assets.image`CielingSpikeIcon`, SpriteKind.Spike)
         tiles.placeOnTile(SpikeTile, value)
     }
-    for (let value of tiles.getTilesByType(assets.tile`SpikeMiniRight`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         SpikeTile = sprites.create(assets.image`MiniRightSpikeIcon`, SpriteKind.Spike)
         tiles.placeOnTile(SpikeTile, value)
     }
-    for (let value of tiles.getTilesByType(assets.tile`SpikeMiniLeft`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         SpikeTile = sprites.create(assets.image`MiniSpikeLeftIcon`, SpriteKind.Spike)
         tiles.placeOnTile(SpikeTile, value)
     }
-    for (let value of tiles.getTilesByType(assets.tile`CheckpointOff`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         CheckpointTile = sprites.create(assets.image`CheckpointIconCheck`, SpriteKind.Checkpoint)
         tiles.placeOnTile(CheckpointTile, value)
         tiles.setTileAt(value, assets.tile`transparency16`)
     }
-    for (let value of tiles.getTilesByType(assets.tile`EndMiddle`)) {
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
         GoalTile = sprites.create(assets.image`Gate`, SpriteKind.Goal)
         tiles.placeOnTile(GoalTile, value)
         GoalTile.y += -7
@@ -415,7 +406,24 @@ function LogPoints () {
         music.play(music.createSong(assets.song`TalkingBenSpeech0`), music.PlaybackMode.InBackground)
         animation.runImageAnimation(
         BenYesNoHoahHoahHoahUegh,
-        assets.animation`TalkingBenCall`,
+        [img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `],
         2000,
         false
         )
@@ -472,7 +480,24 @@ function DitherTransition () {
     Transition.lifespan = 1500
     animation.runImageAnimation(
     Transition,
-    assets.animation`DitherTransition`,
+    [img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
     50,
     false
     )
@@ -644,7 +669,24 @@ function EnterCode (Answer: string) {
         music.play(music.createSong(assets.song`TalkingBenSpeech`), music.PlaybackMode.InBackground)
         animation.runImageAnimation(
         BenYesNoHoahHoahHoahUegh,
-        assets.animation`TalkingBenCall`,
+        [img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `],
         2000,
         false
         )
@@ -684,7 +726,7 @@ function OpenTilemapEditor () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Bar)
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
     scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`BackgroundNoWaves`)
-    tiles.setCurrentTilemap(tilemap`Grid64`)
+    tiles.setCurrentTilemap(tilemap`level1`)
     Selector = sprites.create(assets.image`Selector`, SpriteKind.Controller)
     Selector.setFlag(SpriteFlag.GhostThroughWalls, true)
     sprites.setDataNumber(Selector, "OffsetX", 12)
@@ -845,6 +887,49 @@ function LoadTileImages () {
     EmptyTile = sprites.create(assets.image`EmptyIcon`, SpriteKind.SpecialTileIcon)
     SpawnpointTile = sprites.create(assets.image`SpawnPointTileIcon`, SpriteKind.SpecialTileIcon)
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Goal)) {
+        animation.runImageAnimation(
+        value,
+        [img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `],
+        100,
+        false
+        )
+    }
+    timer.after(1500, function () {
+        DitherTransition()
+        timer.after(750, function () {
+            sprite.setPosition(0, 0)
+            sprites.destroy(sprite)
+            LoadTitleScreen()
+            LogPoints()
+        })
+    })
+})
 sprites.onCreated(SpriteKind.Player, function (sprite) {
     sprite.ay = 500
     controller.moveSprite(sprite, 70, 0)
